@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Elite - Checkout</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <h1 class="logo">Elite</h1>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="checkout.html">Checkout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="checkout-section">
+  <h1>Checkout</h1>
+
+  <div id="checkout-items"></div>
+  <h3 id="checkout-total"></h3>
+
+  <form id="checkout-form">
+    <input type="text" name="fullname" placeholder="Full Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="tel" name="mobile" placeholder="Mobile Number" required />
+    <input type="text" name="address" placeholder="Address" required />
+    <input type="text" name="city" placeholder="City" required />
+    <input type="text" name="state" placeholder="State" required />
+    <input type="text" name="pincode" placeholder="Pincode" required />
+    <button type="submit">Place Order</button>
+  </form>
+
+  <div id="order-message"></div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Elite. All rights reserved.</p>
+</footer>
+
+<script>
+  const checkoutForm = document.getElementById("checkout-form");
+
+  if (checkoutForm) {
+    checkoutForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const userId = sessionStorage.getItem("userId");
+      if (!userId) {
+        alert("Please login first!");
+        return;
+      }
+
+      const formData = new FormData(checkoutForm);
+
+      const payload = {
+        userId: userId,
+        fullname: formData.get("fullname"),
+        email: formData.get("email"),
+        mobile: formData.get("mobile"),
+        address: formData.get("address"),
+        city: formData.get("city"),
+        state: formData.get("state"),
+        pincode: formData.get("pincode")
+      };
+
+      try {
+        const response = await fetch("http://localhost:3000/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById("order-message").innerText = "✅ Order placed successfully!";
+          alert("Your order has been placed successfully!");
+          checkoutForm.reset();
+        } else {
+          alert("Order failed: " + data.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Server error: " + err.message);
+      }
+    });
+  }
+  
+</script>
+<!-- checkout.html -->
+<script>
+  // ... existing checkoutForm code
+  if (checkoutForm) {
+    checkoutForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const userId = sessionStorage.getItem("userId");
+      if (!userId) {
+        alert("Please login first!");
+        return;
+      }
+      const formData = new FormData(checkoutForm);
+      const payload = {
+        userId: userId,
+        fullname: formData.get("fullname"),
+        email: formData.get("email"),
+        mobile: formData.get("mobile"),
+        address: formData.get("address"),
+        city: formData.get("city"),
+        state: formData.get("state"),
+        pincode: formData.get("pincode")
+      };
+      try {
+        const response = await fetch("http://localhost:3000/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (data.success) {
+          // ✅ redirect to success page with name param
+          window.location.href = `order-success.html?name=${encodeURIComponent(payload.fullname)}`;
+        } else {
+          alert("Order failed: " + data.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Server error: " + err.message);
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

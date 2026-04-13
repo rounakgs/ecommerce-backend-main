@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Elite - Products</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script defer>
+  function checkAuth() {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      window.location.replace("index.html?loginRequired=true");
+    }
+  }
+  checkAuth();
+</script>
+
+</head>
+
+<body>
+  
+
+  <!-- Navbar -->
+  <header>
+  <nav class="navbar">
+    <h1 class="logo">Elite</h1>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#" class="login-link">
+       <button id="theme-toggle" class="theme-btn">
+  <i class="fas fa-moon"></i>
+</button> 
+        <li><a href="#" id="login-btn"><i class="fas fa-user"></i> Login</a></li>
+
+      </a></li>
+    </ul>
+  </nav>
+</header>
+
+
+  <!-- Products Section -->
+  <section class="products-section">
+    <h2 class="section-title">Our Products</h2>
+    <div class="products-grid" id="products-container">
+      <!-- Products will be loaded here via JavaScript -->
+    </div>
+  </section>
+
+  <section class="products-section">
+  <h2 class="section-title">Our Products</h2>
+  <div class="products-grid">
+    <div class="product-card">
+      <img src="images/product1.jpg" alt="Product 1">
+      <h3>Product Title</h3>
+      <p>$49.99</p>
+      <button class="add-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+    </div>
+    <!-- Repeat for other products -->
+  </div>
+</section>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 ShopVerse. All rights reserved.</p>
+  </footer>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+
+ 
+  if (sessionStorage.getItem("isLoggedIn") !== "true") {
+  alert("Please login first!");
+  window.location.href = "index.html?loginRequired=true";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Elite - Contact</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script defer>
+  function checkAuth() {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      window.location.replace("index.html?loginRequired=true");
+    }
+  }
+  checkAuth();
+</script>
+
+</head>
+<body>
+
+  <!-- Navbar -->
+ <header>
+  <nav class="navbar">
+    <h1 class="logo">Elite</h1>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#" class="login-link">
+        <button id="theme-toggle" class="theme-btn">
+  <i class="fas fa-moon"></i>
+</button>
+        <li><a href="#" id="login-btn"><i class="fas fa-user"></i> Login</a></li>
+
+      </a></li>
+    </ul>
+  </nav>
+</header>
+
+
+  <!-- Contact Form -->
+  <section class="contact-section">
+    <h2 class="section-title">Contact Us</h2>
+    <form id="contact-form">
+      <input type="text" name="user_name" placeholder="Your Name" required />
+      <input type="email" name="user_email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit" class="add-btn">Send Message</button>
+    </form>
+    <p id="form-message" class="form-message"></p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Elite. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+
+ if (sessionStorage.getItem("isLoggedIn") !== "true") {
+  alert("Please login first!");
+  window.location.href = "index.html?loginRequired=true";
+}
+
+</script>
+
+</body>
+</html>

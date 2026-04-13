@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Account - Elite</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer>
+  function checkAuth() {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      window.location.replace("index.html?loginRequired=true");
+    }
+  }
+  checkAuth();
+</script>
+
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">Elite</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#" id="logout-btn">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="account-section" style="padding: 2rem; text-align:center;">
+    <h2>Welcome to your Account!</h2>
+    <p id="user-details" style="margin-top:1rem; font-size:1.2rem;"></p>
+  </section>
+
+  <script>
+    const user = sessionStorage.getItem("userName");
+    if (!user) {
+      alert("Please login first!");
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("user-details").textContent = `Logged in as: ${user}`;
+    }
+
+    // Logout
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      sessionStorage.clear();
+      alert("You have been logged out!");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

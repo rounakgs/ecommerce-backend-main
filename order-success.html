@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Confirmation | Elite</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f0f9ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .checkmark {
+      width: 120px;
+      height: 120px;
+    }
+    .success-msg {
+      font-size: 28px;
+      color: #4CAF50;
+      margin: 20px 0 10px;
+    }
+    .receipt {
+      background: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      text-align: left;
+      min-width: 300px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .print-btn, .home-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .timer {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+    
+    /* Add styles for the countdown timer */
+    #redirect-timer {
+      font-size: 48px;
+      font-weight: bold;
+      position: relative;
+      animation: drop 1s forwards;
+    }
+
+    @keyframes drop {
+      0% {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="container">
+  <!-- Animated SVG Checkmark -->
+  <svg class="checkmark" viewBox="0 0 52 52">
+    <circle cx="26" cy="26" r="25" fill="none" stroke="#4CAF50" stroke-width="2"/>
+    <path fill="none" stroke="#4CAF50" stroke-width="4" d="M14 27 l10 10 l15 -15">
+      <animate attributeName="stroke-dasharray" from="0,50" to="50,0" dur="0.5s" fill="freeze" />
+    </path>
+  </svg>
+
+  <div class="success-msg">Thank you, <span id="username"></span>!<br>Your order has been placed 🎉</div>
+
+  <div class="receipt">
+    <h3>Receipt</h3>
+    <p>Order ID: #<span id="order-id"></span></p>
+    <p>Date: <span id="order-date"></span></p>
+    <p>Time: <span id="order-time"></span></p>
+    <p>Total Amount Paid: ₹<span id="order-amount">0</span></p>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">🖨️ Print Receipt</button>
+  <button class="home-btn" onclick="window.location.href='index.html'">🏠 Go to Home</button>
+
+  <div class="timer">
+    Redirecting to home in 
+    <div id="countdown-wrapper">
+      <div id="countdown">15</div>
+    </div> seconds...
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  // Username from URL
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("name") || "Customer";
+  document.getElementById("username").textContent = name;
+
+  // Generate Order ID
+  document.getElementById("order-id").textContent = Math.floor(Math.random() * 90000) + 10000;
+
+  // Get current date and time
+  const currentDate = new Date();
+  document.getElementById("order-date").textContent = currentDate.toLocaleDateString();
+  document.getElementById("order-time").textContent = currentDate.toLocaleTimeString();
+
+  // Example product prices (replace with actual product prices)
+  const totalAmount = productPrices.reduce((acc, price) => acc + price, totalAmount);
+  // Retrieve the total amount from session storage
+document.getElementById("order-amount").textContent = totalAmount;
+
+  // Set the total amount
+  document.getElementById("order-amount").textContent = totalAmount;
+
+  // Confetti
+  const confetti = window.confetti.create(document.getElementById('confetti-canvas'), {
+    resize: true,
+    useWorker: true
+  });
+
+  confetti({
+    particleCount: 200,
+    spread: 70,
+    origin: { y: 0.6 }
+  }); 
+</script>
+
+<!-- Timer Countdown & Auto-Redirect -->
+<script>
+  let seconds = 15;
+  const countdownEl = document.getElementById("countdown");
+
+  function updateCountdown() {
+    countdownEl.textContent = seconds;
+    countdownEl.style.animation = "none"; // reset animation
+    void countdownEl.offsetWidth; // reflow to restart animation
+    countdownEl.style.animation = "slideDown 0.5s ease-in-out forwards";
+  }
+
+  updateCountdown();
+
+  const interval = setInterval(() => {
+    seconds--;
+    updateCountdown();
+    if (seconds <= 0) {
+      clearInterval(interval);
+      window.location.href = "index.html";
+    }
+  }, 1000);
+</script>
+
+</body>
+</html>

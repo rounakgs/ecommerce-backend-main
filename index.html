@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elite - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<header>
+  <nav class="navbar">
+    <h1 class="logo">Elite</h1>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <button id="theme-toggle" class="theme-btn">
+        <i class="fas fa-moon"></i>
+      </button>
+      <li id="account-info"></li>
+      <li><a href="#" id="login-btn"><i class="fas fa-user"></i> Login</a></li>
+      <li><a href="#" id="logout-btn" style="display:none;">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Login Modal -->
+<div class="login-modal" id="login-modal">
+  <div class="login-content">
+    <span class="close-btn" id="close-login">&times;</span>
+
+    <div id="login-form">
+      <h2>Login</h2>
+      <form>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
+      </form>
+    </div>
+
+    <div id="signup-form" style="display: none;">
+      <h2>Create Account</h2>
+      <form id="signup-data">
+        <div class="input-group">
+          <input type="text" placeholder="First Name" required>
+          <input type="text" placeholder="Last Name" required>
+        </div>
+        <input type="tel" placeholder="Mobile Number" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="password" placeholder="Password" required>
+
+
+        <select required>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+
+        <select required>
+          <option value="">Select Country</option>
+          <option value="India">India</option>
+          <option value="USA">USA</option>
+          <option value="UK">UK</option>
+        </select>
+
+        <label class="checkbox-label">
+          <input type="checkbox" id="agree-checkbox"> I agree to Terms & Conditions
+        </label>
+
+        <button type="submit" id="signup-btn" disabled>Sign Up</button>
+        <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-text">
+    <h2>Welcome to Elite!</h2>
+    <p>Discover the best products at unbeatable prices.</p>
+    <button class="btn" id="shop-now-btn">Shop Now</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 Elite. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="js/script.js"></script>
+<script>
+  // Check URL param for loginRequired
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("loginRequired") === "true") {
+    setTimeout(() => {
+      document.getElementById("login-modal").style.display = "flex";
+    }, 200); // Small delay to ensure modal loads
+  }
+
+</script>
+
+</body>
+</html>
